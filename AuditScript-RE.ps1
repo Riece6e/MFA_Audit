@@ -3,7 +3,7 @@ Connect-MgGraph -NoWelcome
 Connect-ExchangeOnline
 
 # Creates PowerShell session to AADC01
-#Enter-PSSession -HostName "AADC01" -UserName "adm_re"
+Enter-PSSession -HostName "AADC01" -UserName "adm_re"
 
 # Start the stopwatch
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
