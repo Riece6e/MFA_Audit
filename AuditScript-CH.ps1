@@ -1,9 +1,20 @@
+# Creates PowerShell session to AD02
+#Enter-PSSession -Computer "AD02" -Credential $MyCredential
+
+#Import-Module ActiveDirectory
+
+#Intialize AD Array
+$EnableUser = @()
+
+#Get all enabled users from AD02
+$EnableUser = Get-ADUser -Filter 'Enabled -eq $true' | Select-Object -Property Name, UserPrincipalName | Sort-Object Name
+
+#Exit PSSEssion
+exit
+
 # Connect to Microsoft Graph with the required scopes
 Connect-MgGraph -NoWelcome
 Connect-ExchangeOnline
-
-# Creates PowerShell session to AADC01
-#Enter-PSSession -HostName "AADC01" -UserName "adm_re"
 
 # Start the stopwatch
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
