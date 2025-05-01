@@ -1,9 +1,9 @@
 # Connect to Microsoft Graph with the required scopes
 Connect-MgGraph -NoWelcome
-Connect-ExchangeOnline
+#Connect-ExchangeOnline
 
 # Creates PowerShell session to AADC01
-Enter-PSSession -ComputerName "AADC01" -UserName "adm_re"
+Enter-PSSession -Computer "AD02" -Credential "adm_re"
 
 # Start the stopwatch
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
