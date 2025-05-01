@@ -46,7 +46,7 @@ foreach ($user in $users) {
         #$user.DisplayName
 
         # Check if the user does not have SoftwareOathAuthenticationMethod
-        if ((-not ($methods | Where-Object { $_.AdditionalProperties['@odata.type'] -eq '#microsoft.graph.softwareOathAuthenticationMethod' -or $_.AdditionalProperties['@odata.type'] -eq '#microsoft.graph.microsoftAuthenticatorAuthenticationMethod' })) -and $mailboxType.Value -eq "UserMailbox") {
+        if (-not ($methods | Where-Object { $_.AdditionalProperties['@odata.type'] -eq '#microsoft.graph.softwareOathAuthenticationMethod' -or $_.AdditionalProperties['@odata.type'] -eq '#microsoft.graph.microsoftAuthenticatorAuthenticationMethod' })) {
             $lastLogon = Get-MailboxStatistics -Identity $user.Mail | Select-Object -ExpandProperty LastLogonTime
             $result += [PSCustomObject]@{
                 DisplayName = $user.DisplayName
