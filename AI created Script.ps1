@@ -18,6 +18,7 @@ Write-Host "Connecting to AD02..." -ForegroundColor Cyan
 # Use a scriptblock with Invoke-Command instead of Enter-PSSession
 $EnabledUsers = @()
 $EnabledUsers = Invoke-Command -ComputerName "AD02" -Credential $MyCredential -ScriptBlock {
+   
     # Import Active Directory module
     Import-Module ActiveDirectory
     
