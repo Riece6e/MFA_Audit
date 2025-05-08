@@ -3,6 +3,11 @@ if (-not $MyCredential) {
     $MyCredential = Get-Credential -Message "Enter credentials for AD02"
 }
 
+#Intialize AD Array
+$EnableUser = @()
+
+# Creates PowerShell session to AD02
+$EnabledUser = Invoke-Command -ComputerName "AD02" -Credential $MyCredential -ScriptBlock {
 Write-Host "Connecting to AD02..." -ForegroundColor Cyan
 
 # Get enabled users from AD02 and store in $EnableUser
@@ -12,18 +17,17 @@ $EnableUser = Invoke-Command -ComputerName "AD02" -Credential $MyCredential -Scr
     # Import Active Directory module
     Import-Module ActiveDirectory
     
-    # Get all enabled users from AD with email addresses
-    Get-ADUser -Filter 'Enabled -eq $true' -Properties mail | 
-    Where-Object { -not [string]::IsNullOrEmpty($_.mail) } |
-    Select-Object -Property Name, UserPrincipalName, mail |
-    Sort-Object Name
+# Get all enabled users from AD with email addresses
+Get-ADUser -Filter 'Enabled -eq $true' -Properties mail | 
+Where-Object { -not [string]::IsNullOrEmpty($_.mail) } |
+Select-Object -Property Name, UserPrincipalName, mail |
+Sort-Object Name
+$EnabledUser
+Exit-PSSession
 }
 
-# Now $EnableUser holds the list of enabled users with email addresses
-# Optional: Display the results
- $EnableUser | Format-Table -AutoSize
-
-Write-Host "Print enabled users" -ForegroundColor Green
+$EnableUser
+Write-Host "Printed Enabled Users"
 
 # Import-Module Microsoft.Graph.Authentication
 # Import-Module ExchangeOnlineManagement
